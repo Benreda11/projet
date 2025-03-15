@@ -197,6 +197,23 @@
             }
         </script>
     </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".title-box, .editable-box").forEach(field => {
+        // Charger le contenu sauvegardé s'il existe
+        let savedData = localStorage.getItem(field.id);
+        if (savedData !== null) {
+            field.innerHTML = savedData;
+        }
+
+        // Sauvegarde automatique lors des modifications
+        field.addEventListener("input", () => {
+            localStorage.setItem(field.id, field.innerHTML);
+        });
+    });
+});
+</script>
+
 </body>
 <p style="color: blue; text-decoration: underline; cursor: pointer;" onclick="window.location.href='autre_page.html'">
     Si tu veux nous contacter
@@ -277,5 +294,142 @@
     </div>
 </body>
 </html>
+<div style="position: absolute; top: 150px; left: 10px;">
+    <a href="https://www.facebook.com/insfpdidouche.mourad.7/?locale=fr_FR" 
+       style="font-weight: bold; text-decoration: underline;">
+       Notre page Facebook
+    </a>
+</div>
+<script>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réinitialisation avec mot de passe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+        }
+        .reset-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: red;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Formulaire</h2>
+    <form id="myForm">
+        <input type="text" id="name" placeholder="Nom">
+        <input type="email" id="email" placeholder="Email">
+        <input type="number" id="age" placeholder="Âge">
+    </form>
+
+    <!-- Icône de réinitialisation -->
+    <span class="reset-icon" onclick="resetForm()">🔄 Réinitialiser</span>
+
+    <script>
+        function resetForm() {
+            let password = prompt("Entrez le mot de passe pour réinitialiser :");
+            if (password === "0000") {
+                document.getElementById("myForm").reset();
+                alert("Formulaire réinitialisé !");
+            } else {
+                alert("Mot de passe incorrect !");
+            }
+        }
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réinitialisation avec mot de passe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+        }
+        .reset-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: red;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+   <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réinitialisation avec mot de passe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .reset-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: red;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Réinitialisation sécurisée</h2>
+
+    <!-- Icône de réinitialisation -->
+    <span class="reset-icon" onclick="resetAction()">🔄 Réinitialiser</span>
+
+    <script>
+        function resetAction() {
+            let password = prompt("Entrez le mot de passe pour réinitialiser :");
+            if (password === "0000") {
+                alert("Action de réinitialisation exécutée !");
+                // Ajoute ici les actions à effectuer lors de la réinitialisation
+            } else {
+                alert("Mot de passe incorrect !");
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
 
 </html>
