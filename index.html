@@ -220,6 +220,51 @@ document.addEventListener("DOMContentLoaded", function () {
 <p style="color: blue; text-decoration: underline; cursor: pointer;" onclick="window.location.href='autre_page.html'">
     Si tu veux nous contacter
 </p>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المركز</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .info-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .info-icon:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>INSFP Didouche Mourad Annaba</h1>
+    </div>
+    
+    <div class="container">
+        
+    </div>
+    
+    <a href="information.html">
+        <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Info" class="info-icon">
+    </a>
+</body>
+</html>
+
     <!DOCTYPE html>
     <html lang="ar" dir="rtl">
     <head>
@@ -270,13 +315,13 @@ document.addEventListener("DOMContentLoaded", function () {
         <h1>مرحبا بك في الموقع</h1>
         <div class="icon-container">
             <div class="icon" onclick="window.location.href='results.html'">
-                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="الرئيسية">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH54qyEoGKMpg-e8QbX7gjjQhWV_UxFWxYFQ&s" alt="الرئيسية">
             </div>
             <div class="icon" onclick="window.location.href='index.html'">
                 <img src="https://cdn-icons-png.flaticon.com/512/609/609803.png" alt="النتائج">
             </div>
             <div class="icon" onclick="window.location.href='teachers.html'">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH54qyEoGKMpg-e8QbX7gjjQhWV_UxFWxYFQ&s" alt="المشرفين">
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="المشرفين">
             </div>
         </div>
     </body>
@@ -400,6 +445,62 @@ document.addEventListener("DOMContentLoaded", function () {
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المركز</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .clock-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            background: transparent;
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div id="clock"></div>
+        <div id="hijri-date"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            let now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            let seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById("clock").innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+        function updateHijriDate() {
+            let hijriDate = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            }).format(new Date());
+            document.getElementById("hijri-date").innerText = hijriDate;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+        updateHijriDate();
+    </script>
+</body>
+</html>
 
 
 </html>
