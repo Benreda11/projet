@@ -220,89 +220,67 @@ document.addEventListener("DOMContentLoaded", function () {
 <p style="color: blue; text-decoration: underline; cursor: pointer;" onclick="window.location.href='autre_page.html'">
     Si tu veux nous contacter
 </p>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المركز</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            position: relative;
-            margin: 0;
-            padding: 0;
-        }
+    <!DOCTYPE html>
+    <html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>المركز</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+                background-color: #f8f9fa;
+            }
 
-        .clock {
-            font-size: 18px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            text-align: left;
-        }
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                margin-top: 50px;
+            }
 
-        .info-container {
-            position: relative;
-            display: inline-block;
-            margin-top: 20px;
-        }
+            .icon {
+                width: 100px;
+                height: 100px;
+                background-color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s, box-shadow 0.3s;
+                cursor: pointer;
+            }
 
-        .info-link {
-            color: blue;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            display: inline-block;
-        }
+            .icon:hover {
+                transform: scale(1.1);
+                box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+            }
 
-        .arrow {
-            font-size: 24px;
-            position: absolute;
-            color: black;
-        }
-
-        .arrow-up { top: -30px; left: 50%; transform: translateX(-50%); }
-        .arrow-left { top: 50%; left: -30px; transform: translateY(-50%); }
-        .arrow-right { top: 50%; right: -30px; transform: translateY(-50%); }
-    </style>
-    <script>
-        function updateClock() {
-            let optionsTime = { timeZone: 'Africa/Algiers', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            let optionsDate = { timeZone: 'Africa/Algiers', day: '2-digit', month: '2-digit', year: 'numeric' };
-            let timeString = new Intl.DateTimeFormat('fr-FR', optionsTime).format(new Date());
-            let dateString = new Intl.DateTimeFormat('fr-FR', optionsDate).format(new Date());
-            
-            let hijriDate = new Intl.DateTimeFormat('ar-SA', { day: '2-digit', month: '2-digit', year: 'numeric', calendar: 'islamic' }).format(new Date());
-            
-            document.getElementById('clock').innerHTML = dateString + "<br>" + hijriDate + " هـ<br>" + timeString;
-        }
-        setInterval(updateClock, 1000);
-    </script>
-</head>
-<body>
-    <div id="clock" class="clock"></div>
-    
-    <div class="info-container">
-        <div class="arrow arrow-up">↓</div>
-        <div class="arrow arrow-left">⬅</div>
-        <div class="arrow arrow-right">➡</div>
-        <p class="info-link" onclick="window.location.href='information.html'">Information</p>
-    </div>
-</body>
-</html>
-<div style="position: absolute; top: 150px; left: 10px;">
-    <a href="https://www.facebook.com/insfpdidouche.mourad.7/?locale=fr_FR" 
-       style="font-weight: bold; text-decoration: underline;">
-       Notre page Facebook
-    </a>
-</div>
-<script>
+            .icon img {
+                width: 60px;
+                height: 60px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>مرحبا بك في الموقع</h1>
+        <div class="icon-container">
+            <div class="icon" onclick="window.location.href='results.html'">
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="الرئيسية">
+            </div>
+            <div class="icon" onclick="window.location.href='index.html'">
+                <img src="https://cdn-icons-png.flaticon.com/512/609/609803.png" alt="النتائج">
+            </div>
+            <div class="icon" onclick="window.location.href='teachers.html'">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH54qyEoGKMpg-e8QbX7gjjQhWV_UxFWxYFQ&s" alt="المشرفين">
+            </div>
+        </div>
+    </body>
+    </html>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -334,15 +312,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </head>
 <body>
 
-    <h2>Formulaire</h2>
-    <form id="myForm">
-        <input type="text" id="name" placeholder="Nom">
-        <input type="email" id="email" placeholder="Email">
-        <input type="number" id="age" placeholder="Âge">
-    </form>
-
-    <!-- Icône de réinitialisation -->
-    <span class="reset-icon" onclick="resetForm()">🔄 Réinitialiser</span>
+   
+    
 
     <script>
         function resetForm() {
@@ -410,9 +381,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     </style>
 </head>
-<body>
-
-    <h2>Réinitialisation sécurisée</h2>
 
     <!-- Icône de réinitialisation -->
     <span class="reset-icon" onclick="resetAction()">🔄 Réinitialiser</span>

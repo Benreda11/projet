@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفع الملفات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            margin: auto;
+            position: relative;
+        }
+        .file-input {
+            margin-top: 20px;
+        }
+        .admin-options {
+            margin-top: 20px;
+            display: none;
+        }
+        .admin-options button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .admin-options button:hover {
+            background-color: #0056b3;
+        }
+        .icon {
+            font-size: 50px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .professors {
+            margin-top: 20px;
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .professor-list {
+            text-align: right;
+            margin-top: 10px;
+            list-style: none;
+            padding: 0;
+        }
+        .professor-list li {
+            background: white;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            display: none;
+            background: red;
+            color: white;
+            border: none;
+            padding: 3px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .add-professor {
+            margin-top: 10px;
+            display: none;
+        }
+        .add-professor input {
+            padding: 5px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .add-professor button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-professor button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        let isAdmin = false;
+
+        function checkAdmin() {
+            isAdmin = prompt("أدخل كلمة السر الخاصة بالمسؤول:") === "admin123";
+            if (isAdmin) {
+                document.getElementById("admin-options").style.display = "block";
+                document.getElementById("add-professor").style.display = "block";
+                document.querySelectorAll(".delete-btn").forEach(btn => btn.style.display = "inline");
+            } else {
+                alert("ليس لديك صلاحيات التعديل!");
+            }
+        }
+
+        function loadProfessors() {
+            let list = document.getElementById("professor-list");
+            list.innerHTML = "";
+            let storedProfessors = JSON.parse(localStorage.getItem("professors")) || [];
+            storedProfessors.forEach((name, index) => {
+                let newItem = document.createElement("li");
+                newItem.textContent = name;
+
+                // Ajouter un bouton de suppression visible seulement pour l'admin
+                let deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "❌";
+                deleteBtn.className = "delete-btn";
+                deleteBtn.style.display = isAdmin ? "inline" : "none";
+                deleteBtn.onclick = function() {
+                    removeProfessor(index);
+                };
+
+                newItem.appendChild(deleteBtn);
+                list.appendChild(newItem);
+            });
+        }
+
+        function addProfessor() {
+            if (!isAdmin) {
+                alert("غير مسموح لك بإضافة الأساتذة!");
+                return;
+            }
+
+            let name = document.getElementById("professor-name").value;
+            if (name.trim() !== "") {
+                let storedProfessors = JSON.parse(localStorage.getItem("professors")) || [];
+                storedProfessors.push(name);
+                localStorage.setItem("professors", JSON.stringify(storedProfessors));
+                loadProfessors();
+                document.getElementById("professor-name").value = "";
+            } else {
+                alert("يرجى إدخال اسم الأستاذ");
+            }
+        }
+
+        function removeProfessor(index) {
+            if (!isAdmin) {
+                alert("غير مسموح لك بحذف الأساتذة!");
+                return;
+            }
+
+            let storedProfessors = JSON.parse(localStorage.getItem("professors")) || [];
+            storedProfessors.splice(index, 1);
+            localStorage.setItem("professors", JSON.stringify(storedProfessors));
+            loadProfessors();
+        }
+
+        window.onload = loadProfessors;
+    </script>
+</head>
+<body>
+    <h1>رفع الملفات <i class="fa-solid fa-upload"></i></h1>
+    <div class="container">
+        <i class="fa-solid fa-file-pdf icon"></i>
+        <input type="file" class="file-input" accept=".pdf">
+        <p>يمكنك رفع ملفات PDF هنا.</p>
+        <button onclick="checkAdmin()">🔒 دخول المسؤول</button>
+        <div id="admin-options" class="admin-options">
+            <button>🗑 حذف الملفات</button>
+            <button>📂 إدارة الملفات</button>
+        </div>
+    </div>
+    <div class="professors">
+        <h2>معلومات الأساتذة</h2>
+        <ul id="professor-list" class="professor-list">
+            <!-- قائمة الأساتذة ستظهر هنا -->
+        </ul>
+        <div id="add-professor" class="add-professor">
+            <input type="text" id="professor-name" placeholder="أدخل اسم الأستاذ">
+            <button onclick="addProfessor()">➕ إضافة</button>
+        </div>
+    </div>
+</body>
+</html>

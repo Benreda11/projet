@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتائج الامتحانات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .admin-options {
+            display: none;
+            margin-top: 15px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .delete-btn {
+            background: red;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+    <script>
+        let isAdmin = false;
+
+        function checkAdmin() {
+            isAdmin = prompt("أدخل كلمة السر الخاصة بالمسؤول:") === "admin123";
+            if (isAdmin) {
+                document.getElementById("admin-options").style.display = "block";
+                document.querySelectorAll(".delete-btn").forEach(btn => btn.style.display = "inline");
+                document.querySelectorAll("td.editable").forEach(cell => cell.contentEditable = "true");
+            } else {
+                alert("ليس لديك صلاحيات التعديل!");
+            }
+        }
+
+        function loadTableData() {
+            let tableData = JSON.parse(localStorage.getItem("examResults")) || [];
+            let tableBody = document.getElementById("result-table-body");
+            tableBody.innerHTML = "";
+            
+            tableData.forEach((row, index) => {
+                let newRow = tableBody.insertRow();
+                let cell1 = newRow.insertCell(0);
+                let cell2 = newRow.insertCell(1);
+                let cell3 = newRow.insertCell(2);
+
+                cell1.textContent = row.name;
+                cell2.textContent = row.result;
+                cell1.classList.add("editable");
+                cell2.classList.add("editable");
+
+                let deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "❌";
+                deleteBtn.className = "delete-btn";
+                deleteBtn.style.display = "none";
+                deleteBtn.onclick = function() {
+                    tableData.splice(index, 1);
+                    saveTableData(tableData);
+                    loadTableData();
+                };
+
+                cell3.appendChild(deleteBtn);
+            });
+
+            if (isAdmin) {
+                document.querySelectorAll(".delete-btn").forEach(btn => btn.style.display = "inline");
+                document.querySelectorAll("td.editable").forEach(cell => cell.contentEditable = "true");
+            }
+        }
+
+        function saveTableData(data) {
+            localStorage.setItem("examResults", JSON.stringify(data));
+        }
+
+        function addRow() {
+            if (!isAdmin) return;
+            let tableData = JSON.parse(localStorage.getItem("examResults")) || [];
+            tableData.push({ name: "اسم الطالب", result: "النتيجة" });
+            saveTableData(tableData);
+            loadTableData();
+        }
+
+        function enableAutoSave() {
+            document.addEventListener("input", function(event) {
+                if (event.target.classList.contains("editable") && isAdmin) {
+                    let rows = document.querySelectorAll("#result-table-body tr");
+                    let newData = [];
+                    rows.forEach(row => {
+                        newData.push({
+                            name: row.cells[0].textContent,
+                            result: row.cells[1].textContent
+                        });
+                    });
+                    saveTableData(newData);
+                }
+            });
+        }
+
+        window.onload = function() {
+            loadTableData();
+            enableAutoSave();
+        };
+    </script>
+</head>
+<body>
+    <h1>نتائج الامتحانات</h1>
+    <div class="container">
+        <button onclick="checkAdmin()">🔒 دخول المسؤول</button>
+        <div id="admin-options" class="admin-options">
+            <button onclick="addRow()">➕ إضافة صف</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>اسم الطالب</th>
+                    <th>النتيجة</th>
+                    <th>❌</th>
+                </tr>
+            </thead>
+            <tbody id="result-table-body">
+                <!-- Les données seront chargées ici -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
